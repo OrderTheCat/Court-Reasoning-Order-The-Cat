@@ -100,7 +100,31 @@ body {
   font-size: 26px;
 }
 
+:root {
+    --bg-color: #ff99d0;
+    --text-color: #9800d2;
+}
 
+/* Dark Theme Variables */
+[data-theme="dark"] {
+    --bg-color: #000000;
+    --text-color: #ff99d0;
+}
+
+/* Apply variables to body */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
 
   </style>
 
@@ -201,6 +225,8 @@ body {
 <a href="https://youtu.be/kAcGDB_kOjI" style="font-family: Patrick Hand; font-size: 22px">Reference</a> <br>
 <a href="https://youtu.be/9lXf5HUGFuw?si=5cPfn63abnfMPed-" style="font-family: Patrick Hand; font-size: 22px">Reference</a>
 
+<button id="theme-toggle">Toggle Dark Mode</button>
+
 
 <div
   id="echothread"
@@ -208,6 +234,35 @@ body {
   data-api-key="uTuVCxXgy590Y7R5dN896Jz4cGa_ut3TZkc2rgjwlDs"
 ></div>
 <script src="https://cdn.echothread.io/widget.js" async></script>
+
+<script>
+       const toggleButton = document.getElementById('theme-toggle');
+       const htmlElement = document.documentElement;
+
+       // Check for saved user preference or use system preference
+       const savedTheme = localStorage.getItem('theme');
+       const systemPreference = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+       if (savedTheme === 'dark' || (!savedTheme && systemPreference)) {
+           htmlElement.setAttribute('data-theme', 'dark');
+           toggleButton.textContent = 'Toggle Light Mode';
+       }
+
+       // Toggle function
+       toggleButton.addEventListener('click', () => {
+           const currentTheme = htmlElement.getAttribute('data-theme');
+
+           if (currentTheme === 'dark') {
+               htmlElement.setAttribute('data-theme', 'light');
+               localStorage.setItem('theme', 'light');
+               toggleButton.textContent = 'Toggle Dark Mode';
+           } else {
+               htmlElement.setAttribute('data-theme', 'dark');
+               localStorage.setItem('theme', 'dark');
+               toggleButton.textContent = 'Toggle Light Mode';
+           }
+       });
+   </script>
 
   </section>
 </body>
